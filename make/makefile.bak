@@ -1,0 +1,57 @@
+########################################
+#文件名称:makefile
+#创建日期:2020/7/12
+#作    者:樊忠祥 fzx
+#文件功能:c_project工程下的编译命令
+########################################
+#修改时间:2020/07/19
+#作    者:樊忠祥 fzx
+#修改说明:增加pubfunc文件夹下文件的编译
+########################################
+
+#公共函数编译文件的头文件引用 20200719 fzx add begin
+include ./filename.include
+#20200719 fzx add end
+
+#源文件名称
+SourceFile = main.c 
+
+#对象文件名称
+ObjectFile = main.o
+
+CC = gcc
+#CPP = g++
+
+#伪目标：为了清除所有的中间文件
+.PHONY:clean
+
+#源代码的绝对路径或者相对路径编译都可以 在这儿我使用了相对路径
+#CODEPATH = $(HOME)/project/c_project/code/framework
+CODEPATH = ../code/framework
+
+#启动程序的相对路径(编译生成可执行文件的路径)
+STARTPATH = ../start
+
+#20200719 fzx add begin
+#公共函数文件路径
+PUBFUNCPATH = ../code/pubfunc
+PUBARG = -I
+#20200719 fzx add end
+
+#20200719 fzx mod begin
+#编译时增加了公共函数的依赖条件编译命令 -I参数
+$(STARTPATH)/cprostart:$(CODEPATH)/$(ObjectFile) $(PUBFUNCPATH)/$(PUBFUNC_O)
+	$(CC) -o $(STARTPATH)/cprostart $(CODEPATH)/$(ObjectFile) $(PUBFUNCPATH)/$(PUBFUNC_O)
+
+$(CODEPATH)/$(ObjectFile):$(CODEPATH)/$(SourceFile) $(PUBFUNCPATH)/$(PUBFUNC_O)
+	$(CC) -c -o $(CODEPATH)/$(ObjectFile) $(CODEPATH)/$(SourceFile) $(PUBARG) $(PUBFUNCPATH)
+#20200719 fzx mod end
+
+#公共函数文件下的的编译 20200719 fzx add begin
+$(PUBFUNCPATH)/$(PUBFUNC_O):$(PUBFUNCPATH)/$(PUBFUNC_C)
+	$(CC) -c -o $(PUBFUNCPATH)/$(PUBFUNC_O) $(PUBFUNCPATH)/$(PUBFUNC_C)
+	
+#20200719 fzx add end
+
+clean:
+	-rm $(CODEPATH)/*.o $(STARTPATH)/cprostart $(PUBFUNCPATH)/*.o

@@ -16,4 +16,9 @@ $(foreach pubfile,$(PUBFUNC),$(eval $(call pubfunc,$(PUBFUNCPATH),$(pubfile),$(C
 #调用clean函数去清楚pubfunc下的文件
 #参数:此处报错，暂时不调用函数执行文件
 clean:
-	$(call cleanpub,$(PUBFUNCPATH),$(pubfile))
+	@echo "Begin increase and clear the mid code"
+	-rm $(PUBFUNCPATH)/$(PUBFUNC).o
+	@echo "Increase and clear successfully"
+
+cleanall:
+	@echo "开始全量清楚代码"

@@ -9,16 +9,24 @@ include define.include
 include setting.include
 include filename.include
 
+.PHONY:makepub
+
 #调用pubfunc函数去编译pubfunc下的文件
-#参数:文件路径 文件名称 编译器名称 编译参数
-$(foreach pubfile,$(PUBFUNC),$(eval $(call pubfunc,$(PUBFUNCPATH),$(pubfile),$(CC),$(ARG_CO))))
+#参数:文件路径 文件名称 编译器名称 编译参数(本来是想通过函数调用，但是使用了patsubst函数，好像自动推导编译命令执行了)
+#$(foreach pubfile,$(PUBFUNC),$(eval $(call pubfunc,$(PUBFUNCPATH),$(pubfile),$(CC),$(ARG_CO))))
+
+
+#makeall总的伪目标，后面可以添加各种伪目标用来进行编译
+makeall:makepub
+
+#makepub伪目标，通过patsubst将所有的编译目标
+makepub:$(patsubst $(PUBFUNCPATH)/%,$(PUBFUNCPATH)/%.o,$(PUBFUNCPATH)/$(PUBFUNC))
 
 #调用clean函数去清楚pubfunc下的文件
 #参数:此处报错，暂时不调用函数执行文件
-clean:
+
+cleanall:
 	@echo "Begin increase and clear the mid code"
 	-rm $(PUBFUNCPATH)/$(PUBFUNC).o
 	@echo "Increase and clear successfully"
 
-cleanall:
-	@echo "开始全量清楚代码"

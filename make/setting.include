@@ -16,5 +16,5 @@ PROPATH := $(HOME)/project/c_project
 PUBFUNCPATH := $(PROPATH)/code/pubfunc
 
 #编译参数
-ARG_C := -c
+ARG_O := -o
 ARG_CO := -c -o

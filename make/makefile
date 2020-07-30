@@ -5,15 +5,18 @@
 #文件功能:主要讲述了一些make编译的命令参数
 ############################################
 
-.PHONY:make makeall clean cleanall help
-#make:
+.PHONY:all makeall clean cleanall help
+
+all:makeall
 	@echo "开始编译代码"
 
+clean:cleanall
+	@echo "开始清楚代码"
 
 ###########################################
 #help 伪目标命令
 ##########################################
-#help:
+help:
 	@echo "******************************"
 	@echo "make  -i :增量编译代码"
 	@echo "make  -a :全量编译代码"

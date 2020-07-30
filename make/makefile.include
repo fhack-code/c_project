@@ -4,6 +4,10 @@
 #作    者:樊忠祥
 #文件功能:主要是通过使用函数来编译代码
 ##########################################
+#修改日期:2020/07/30
+#作    者:樊忠祥
+#修改描述:将call函数的调用改为patsubst函数
+############################################
 
 include define.include
 include setting.include
@@ -11,16 +15,19 @@ include filename.include
 
 .PHONY:makepub
 
+#fzx 20200730 del begin
 #调用pubfunc函数去编译pubfunc下的文件
 #参数:文件路径 文件名称 编译器名称 编译参数(本来是想通过函数调用，但是使用了patsubst函数，好像自动推导编译命令执行了)
 #$(foreach pubfile,$(PUBFUNC),$(eval $(call pubfunc,$(PUBFUNCPATH),$(pubfile),$(CC),$(ARG_CO))))
+#fzx 20200730 del end
 
-
+#fzx 20200730 add begin
 #makeall总的伪目标，后面可以添加各种伪目标用来进行编译
 makeall:makepub
 
 #makepub伪目标，通过patsubst将所有的编译目标
 makepub:$(patsubst $(PUBFUNCPATH)/%,$(PUBFUNCPATH)/%.o,$(PUBFUNCPATH)/$(PUBFUNC))
+#fzx 20200730 add end
 
 #调用clean函数去清楚pubfunc下的文件
 #参数:此处报错，暂时不调用函数执行文件

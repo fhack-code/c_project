@@ -8,10 +8,10 @@
 .PHONY:all makeall clean cleanall help
 
 all:makeall
-	@echo "开始编译代码"
+	@echo "代码编译完成"
 
 clean:cleanall
-	@echo "开始清楚代码"
+	@echo "代码清楚完成"
 
 ###########################################
 #help 伪目标命令
